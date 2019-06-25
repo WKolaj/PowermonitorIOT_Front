@@ -1,0 +1,4 @@
+{
+  "authTokenName": "x-auth-token",
+  "authRoute": "/api/auth"
+}

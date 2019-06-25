@@ -1,0 +1,58 @@
+{
+  "DrawerOverview": {
+    "pl": "Przegląd",
+    "us": "Overview"
+  },
+  "DrawerReports": {
+    "pl": "Raporty",
+    "us": "Reports"
+  },
+  "DrawerEvents": {
+    "pl": "Zdarzenia i alarmy",
+    "us": "Events and alerts"
+  },
+  "DrawerDevices": {
+    "pl": "Urządzenia",
+    "us": "Devices"
+  },
+  "DrawerUsers": {
+    "pl": "Użytkownicy",
+    "us": "Users"
+  },
+  "DrawerAdvanced": {
+    "pl": "Ustawienia zaaw.",
+    "us": "Advanced settings"
+  },
+  "languageName": {
+    "pl": "Polski",
+    "us": "English"
+  },
+  "mainTitle": {
+    "pl": "PowermonitorIOT",
+    "us": "PowermonitorIOT"
+  },
+  "SignIn": {
+    "pl": "Zaloguj",
+    "us": "Sign in"
+  },
+  "SignOut": {
+    "pl": "Wyloguj",
+    "us": "Sign out"
+  },
+  "Settings": {
+    "pl": "Ustawienia",
+    "us": "Settings"
+  },
+  "Cancel": {
+    "pl": "Anuluj",
+    "us": "Cancel"
+  },
+  "UserDialogTitle": {
+    "pl": "Zaloguj się..",
+    "us": "Please sign in.."
+  },
+  "UserLoginError": {
+    "pl": "Błąd podczas logowania",
+    "us": "Error during singing in"
+  }
+}
