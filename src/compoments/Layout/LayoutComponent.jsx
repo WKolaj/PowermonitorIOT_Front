@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "../Toolbar/ToolbarComponent";
-import { Container, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import Drawer from "../Drawer/DrawerComponent";
 import UserDialog from "../UserDialog/UserDialogComponent";
 import BusyDialog from "../BusyDialog/BusyDialogComponent";
+import BottomBar from "../BottomBar/BottomBar";
 import { getCurrentJWT } from "../../services/authService";
 import { loginUserWithJWTActionCreator } from "../../actions/userActionCreator";
 import {
@@ -18,6 +18,7 @@ import {
   layoutDeactivateUserCheckActionCreator
 } from "../../actions/layoutActionCreator";
 import ErrorDialog from "../ErrorDialog/ErrorDialogComponent";
+import MainContainer from "../MainContainer/MainContainerComponent";
 
 //Method for creating styles
 const styles = theme => ({
@@ -29,10 +30,6 @@ const styles = theme => ({
     flexGrow: 1,
     height: "100vh",
     overflow: "auto"
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
   },
   paper: {
     padding: theme.spacing(2),
@@ -71,15 +68,14 @@ class LayoutComponent extends Component {
       <div className={classes.root}>
         <CssBaseline />
         <Toolbar />
+        <BottomBar />
         <Drawer />
         <UserDialog />
         <BusyDialog />
         <ErrorDialog />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            <Typography>{process.env.REACT_APP_BASE_URL}</Typography>
-          </Container>
+          <MainContainer />
         </main>
       </div>
     );

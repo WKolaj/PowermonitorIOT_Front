@@ -19,6 +19,7 @@ import {
 } from "@material-ui/icons";
 import clsx from "clsx";
 import translate from "../../translator/Translator";
+import { Link } from "react-router-dom";
 //Method for creating styles
 const styles = theme => ({
   toolbarIcon: {
@@ -48,7 +49,11 @@ const styles = theme => ({
       width: theme.spacing(9)
     }
   },
-  appBarSpacer: theme.mixins.toolbar
+  appBarSpacer: theme.mixins.toolbar,
+  link: {
+    textDecoration: "none",
+    color: "inherit"
+  }
 });
 const drawerWidth = 240;
 
@@ -84,12 +89,14 @@ class DrawerComponent extends Component {
           <ListItemText primary={translate("DrawerEvents")} />
         </ListItem>
         <Divider />
-        <ListItem button>
-          <ListItemIcon>
-            <ViewModule className={classes.toolbarIcon} />
-          </ListItemIcon>
-          <ListItemText primary={translate("DrawerDevices")} />
-        </ListItem>
+        <Link to="/devicesConfig" className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <ViewModule className={classes.toolbarIcon} />
+            </ListItemIcon>
+            <ListItemText primary={translate("DrawerDevices")} />
+          </ListItem>
+        </Link>
         <ListItem button>
           <ListItemIcon>
             <People className={classes.toolbarIcon} />

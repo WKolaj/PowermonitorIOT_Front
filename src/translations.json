@@ -54,5 +54,9 @@
   "UserLoginError": {
     "pl": "Błąd podczas logowania",
     "us": "Error during singing in"
+  },
+  "DeviceMenuTitle": {
+    "pl": "Urządzenia",
+    "us": "Devices"
   }
 }

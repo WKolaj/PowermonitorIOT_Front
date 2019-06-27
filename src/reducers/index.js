@@ -7,6 +7,8 @@ import userDialogReducer from "./userDialogReducer";
 import userReducer from "./userReducer";
 import layoutReducer from "./layoutReducer";
 import errorDialogReducer from "./errorDialogReducer";
+import dataReducer from "./dataReducer";
+import infoReducer from "./infoReducer";
 import { reducer } from "redux-form";
 
 export default combineReducers({
@@ -18,5 +20,7 @@ export default combineReducers({
   user: userReducer,
   layout: layoutReducer,
   error: errorDialogReducer,
+  data: dataReducer,
+  info: infoReducer,
   form: reducer
 });

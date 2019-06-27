@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Person } from "@material-ui/icons";
-import { Button, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import {
@@ -35,32 +35,18 @@ class UserButtonComponent extends Component {
   };
 
   render() {
-    let { user, classes } = this.props;
+    let { classes } = this.props;
     return (
       <React.Fragment>
-        {user ? (
-          <Button
-            variant="contained"
-            color="secondary"
-            ref={this.buttonRef}
-            className={classes.button}
-            onClick={this.handleButtonClicked}
-          >
-            <Person className={classes.icon} />
-            {user.login}
-          </Button>
-        ) : (
-          <IconButton
-            variant="contained"
-            color="inherit"
-            ref={this.buttonRef}
-            onClick={this.handleButtonClicked}
-            className={classes.iconButton}
-          >
-            <Person />
-          </IconButton>
-        )}
-
+        <IconButton
+          variant="contained"
+          color="inherit"
+          ref={this.buttonRef}
+          onClick={this.handleButtonClicked}
+          className={classes.iconButton}
+        >
+          <Person />
+        </IconButton>
         <UserWindow referenceEl={this.buttonRef} />
       </React.Fragment>
     );

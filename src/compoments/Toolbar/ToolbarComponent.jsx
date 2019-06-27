@@ -11,6 +11,7 @@ import {
 import { translate } from "../../translator/Translator";
 import LanguageButton from "../LanguageButton/LanguageButtonComponent";
 import UserButton from "../UserButton/UserButtonComponent";
+import ProgressBar from "../ProgressBar/ProgressBarComponent";
 
 const styles = theme => ({
   appBar: {

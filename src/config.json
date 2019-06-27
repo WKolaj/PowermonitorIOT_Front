@@ -1,4 +1,8 @@
 {
   "authTokenName": "x-auth-token",
-  "authRoute": "/api/auth"
+  "authRoute": "/api/auth",
+  "devicesRoute": "/api/devices",
+  "infoRoute": "/api/info",
+  "minCPUTemp": 50,
+  "maxCPUTemp": 85
 }
