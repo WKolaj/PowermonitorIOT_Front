@@ -11,6 +11,7 @@ import dataReducer from "./dataReducer";
 import infoReducer from "./infoReducer";
 import trendsReducer from "./trendsReducer";
 import trendDialogReducer from "./trendDialogReducer";
+import deviceConfigReducer from "./deviceConfigReducer";
 import { reducer } from "redux-form";
 
 export default combineReducers({
@@ -26,5 +27,6 @@ export default combineReducers({
   info: infoReducer,
   trends: trendsReducer,
   trendDialog: trendDialogReducer,
+  deviceConfig: deviceConfigReducer,
   form: reducer
 });

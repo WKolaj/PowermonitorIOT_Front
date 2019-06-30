@@ -8,6 +8,11 @@ const getValue = async function(deviceId, elementId) {
   return result.data;
 };
 
+const getDeviceValues = async function(deviceId) {
+  let result = await http.get(`${valuesRoute}/${deviceId}`);
+  return result.data;
+};
+
 const getValues = async function(
   deviceId,
   elementId,
@@ -23,4 +28,4 @@ const getValues = async function(
   return result.data;
 };
 
-export default { getValue, getValues };
+export default { getValue, getValues, getDeviceValues };

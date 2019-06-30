@@ -3,11 +3,18 @@ import {
   DATA_REFRESH_CONNECTIONS,
   DATA_FETCH_DEVICE,
   DATA_FETCH_VARIABLE,
-  DATA_FETCH_CALCELEMENT
+  DATA_FETCH_CALCELEMENT,
+  DATA_FETCH_VARIABLES,
+  DATA_FETCH_CALCELEMENTS,
+  DATA_FETCH_VALUES
 } from "./types";
 import { getAllDevices, getDevice } from "../services/devicesService";
-import { getVariable } from "../services/variablesService";
-import { getCalcElements } from "../services/calcElementsService";
+import { getVariable, getAllVariables } from "../services/variablesService";
+import valuesService from "../services/valuesService";
+import {
+  getCalcElements,
+  getAllCalcElements
+} from "../services/calcElementsService";
 import { exists, arrayToObject } from "../utilities/utilities";
 
 export const fetchDevicesActionCreator = function() {
@@ -154,5 +161,111 @@ export const fetchElementActionCreator = function(deviceId, elementId) {
 
     if (isVariable) dispatch(fetchVariableActionCreator(deviceId, elementId));
     else dispatch(fetchCalculationElementActionCreator(deviceId, elementId));
+  };
+};
+
+export const fetchVariablesActionCreator = function(deviceId) {
+  return async function(dispatch, getState) {
+    try {
+      let stateObject = getState();
+      //Dispatching device if it do not exist
+      let deviceObject = stateObject.data.devices[deviceId];
+
+      if (!exists(deviceObject)) {
+        await dispatch(fetchDeviceActionCreator(deviceId));
+
+        //Refreshing device if it does not exist
+        stateObject = getState();
+        deviceObject = stateObject.data.devices[deviceId];
+      }
+
+      let allVariables = await getAllVariables(deviceId);
+
+      //Converting arrays to collection objects
+      let variableToReturn = arrayToObject(allVariables, "id");
+
+      dispatch({
+        type: DATA_FETCH_VARIABLES,
+        payload: {
+          deviceId: deviceId,
+          variables: variableToReturn
+        }
+      });
+    } catch (err) {}
+  };
+};
+
+export const fetchCalculationElementsActionCreator = function(deviceId) {
+  return async function(dispatch, getState) {
+    try {
+      let stateObject = getState();
+      //Dispatching device if it do not exist
+      let deviceObject = stateObject.data.devices[deviceId];
+
+      if (!exists(deviceObject)) {
+        await dispatch(fetchDeviceActionCreator(deviceId));
+
+        //Refreshing device if it does not exist
+        stateObject = getState();
+        deviceObject = stateObject.data.devices[deviceId];
+      }
+
+      let allCalcElements = await getAllCalcElements(deviceId);
+
+      //Converting arrays to collection objects
+      let calcElementsToReturn = arrayToObject(allCalcElements, "id");
+
+      dispatch({
+        type: DATA_FETCH_CALCELEMENTS,
+        payload: {
+          deviceId: deviceId,
+          calculationElements: calcElementsToReturn
+        }
+      });
+    } catch (err) {}
+  };
+};
+
+export const fetchElementsActionCreator = function(deviceId) {
+  return async function(dispatch, getState) {
+    let stateObject = getState();
+    //Dispatching device if it do not exist
+    let deviceObject = stateObject.data.devices[deviceId];
+
+    if (!exists(deviceObject)) {
+      await dispatch(fetchDeviceActionCreator(deviceId));
+
+      //Refreshing device if it does not exist
+      stateObject = getState();
+      deviceObject = stateObject.data.devices[deviceId];
+    }
+
+    await dispatch(fetchVariablesActionCreator(deviceId));
+    await dispatch(fetchCalculationElementsActionCreator(deviceId));
+  };
+};
+
+export const fetchValuesActionCreator = function(deviceId) {
+  return async function(dispatch, getState) {
+    let stateObject = getState();
+    //Dispatching device if it do not exist
+    let deviceObject = stateObject.data.devices[deviceId];
+
+    if (!exists(deviceObject)) {
+      await dispatch(fetchDeviceActionCreator(deviceId));
+
+      //Refreshing device if it does not exist
+      stateObject = getState();
+      deviceObject = stateObject.data.devices[deviceId];
+    }
+
+    let values = await valuesService.getDeviceValues(deviceId);
+    await dispatch({
+      type: DATA_FETCH_VALUES,
+      payload: {
+        deviceId,
+        values
+      }
+    });
   };
 };

@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Grid, Paper, Button } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
+import { Route, Switch } from "react-router-dom";
 import {
   fetchDevicesActionCreator,
   fetchDeviceActionCreator,
   refreshConnectionsActionCreator,
   fetchVariableActionCreator,
+  fetchVariablesActionCreator,
   fetchCalculationElementActionCreator,
-  fetchElementActionCreator
+  fetchCalculationElementsActionCreator,
+  fetchElementActionCreator,
+  fetchElementsActionCreator
 } from "../../actions/dataActionCreator";
 import userService from "../../services/userService.js";
 import DevicesMenu from "./DevicesMenu";
@@ -21,6 +25,7 @@ import {
 } from "../../actions/trendsActionCreator";
 import { showTrendDialogActionCreator } from "../../actions/trendDialogActionCreator";
 import { isEmpty } from "../../utilities/utilities";
+import DeviceConfig from "./DeviceConfigComponent/DeviceConfigComponent";
 
 const styles = theme => ({
   root: { height: "100%" },
@@ -42,6 +47,7 @@ class DevicesConfigComponent extends Component {
     //this.props.fetchDevice("5d134065682f6f0e682d4015");
     let { fetchDevices, user, devices } = this.props;
     if (isEmpty(devices) && userService.canVisualizeData(user)) {
+      fetchDevices();
     }
   };
 
@@ -59,8 +65,6 @@ class DevicesConfigComponent extends Component {
   componentWillUnmount = () => {
     if (this._timeHandler) clearInterval(this._timeHandler);
   };
-
-  handleStartSampling = () => {};
 
   render() {
     this.refreshDevices();
@@ -82,52 +86,9 @@ class DevicesConfigComponent extends Component {
         </Grid>
         <Grid item xs>
           <Paper className={classes.rightColumn}>
-            <Button
-              onClick={() => {
-                this.props.startRefreshingCurrentValues(
-                  this.props.trendObject.trendId
-                );
-              }}
-            >
-              Start
-            </Button>
-            <Button
-              onClick={() => {
-                this.props.stopRefreshingCurrentValues(
-                  this.props.trendObject.trendId
-                );
-              }}
-            >
-              Stop
-            </Button>
-            <Button
-              onClick={() => {
-                this.props.startRefreshingHistoryValues(
-                  this.props.trendObject.trendId
-                );
-              }}
-            >
-              Start
-            </Button>
-            <Button
-              onClick={() => {
-                this.props.stopRefreshingHistoryValues(
-                  this.props.trendObject.trendId
-                );
-              }}
-            >
-              Stop
-            </Button>
-            <Button
-              onClick={() => {
-                this.props.showTrendDialog(
-                  "5d134065682f6f0e682d4015",
-                  "5d134065682f6f0e682d3fe0"
-                );
-              }}
-            >
-              Show
-            </Button>
+            <Switch>
+              <Route path="/devicesConfig/:deviceId" component={DeviceConfig} />
+            </Switch>
           </Paper>
         </Grid>
       </Grid>

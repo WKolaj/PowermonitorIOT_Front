@@ -9,6 +9,7 @@ import {
   ListItem,
   Divider
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { Check, Close, ViewModule } from "@material-ui/icons";
 
 import { translate } from "../../translator/Translator";
@@ -23,22 +24,32 @@ const styles = theme => ({
   itemIcon: {
     margin: 0,
     padding: 0
+  },
+  link: {
+    textDecoration: "none",
+    color: "inherit"
   }
 });
 
 class DevicesMenuComponent extends Component {
   renderDeviceButton = device => {
     return (
-      <MenuItem key={device.id}>
-        <ListItemIcon className={this.props.classes.itemIcon}>
-          {device.connected ? (
-            <Check className={this.props.classes.connectedIcon} />
-          ) : (
-            <Close className={this.props.classes.notConnectedIcon} />
-          )}
-        </ListItemIcon>
-        <ListItemText primary={device.name} />
-      </MenuItem>
+      <Link
+        key={device.id}
+        to={`/devicesConfig/${device.id}`}
+        className={this.props.classes.link}
+      >
+        <ListItem button>
+          <ListItemIcon className={this.props.classes.itemIcon}>
+            {device.connected ? (
+              <Check className={this.props.classes.connectedIcon} />
+            ) : (
+              <Close className={this.props.classes.notConnectedIcon} />
+            )}
+          </ListItemIcon>
+          <ListItemText primary={device.name} />
+        </ListItem>
+      </Link>
     );
   };
 

@@ -58,5 +58,21 @@
   "DeviceMenuTitle": {
     "pl": "Urządzenia",
     "us": "Devices"
+  },
+  "DeviceConfigVariableTitle": {
+    "pl": "Zmienne urządzenia",
+    "us": "Device variables"
+  },
+  "DeviceConfigCalcElementTitle": {
+    "pl": "Elementy specjalne",
+    "us": "Calculation elements"
+  },
+  "ElementsConfigTableElementName": {
+    "pl": "Nazwa elementu",
+    "us": "Element name"
+  },
+  "ElementsConfigTableElementValue": {
+    "pl": "Wartość",
+    "us": "Value"
   }
 }
