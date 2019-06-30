@@ -9,6 +9,8 @@ import layoutReducer from "./layoutReducer";
 import errorDialogReducer from "./errorDialogReducer";
 import dataReducer from "./dataReducer";
 import infoReducer from "./infoReducer";
+import trendsReducer from "./trendsReducer";
+import trendDialogReducer from "./trendDialogReducer";
 import { reducer } from "redux-form";
 
 export default combineReducers({
@@ -22,5 +24,7 @@ export default combineReducers({
   error: errorDialogReducer,
   data: dataReducer,
   info: infoReducer,
+  trends: trendsReducer,
+  trendDialog: trendDialogReducer,
   form: reducer
 });

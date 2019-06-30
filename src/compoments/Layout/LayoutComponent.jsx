@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Drawer from "../Drawer/DrawerComponent";
 import UserDialog from "../UserDialog/UserDialogComponent";
 import BusyDialog from "../BusyDialog/BusyDialogComponent";
+import TrendDialog from "../TrendDialog/TrendDialogComponent";
 import BottomBar from "../BottomBar/BottomBar";
 import { getCurrentJWT } from "../../services/authService";
 import { loginUserWithJWTActionCreator } from "../../actions/userActionCreator";
@@ -70,6 +71,7 @@ class LayoutComponent extends Component {
         <Toolbar />
         <BottomBar />
         <Drawer />
+        <TrendDialog />
         <UserDialog />
         <BusyDialog />
         <ErrorDialog />

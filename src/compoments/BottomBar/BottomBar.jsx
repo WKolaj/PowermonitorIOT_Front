@@ -19,10 +19,6 @@ const styles = theme => ({
   toolBar: {
     minHeight: 0,
     margin: 10
-  },
-  progressBarIcon: {
-    width: 16,
-    height: 16
   }
 });
 
@@ -58,25 +54,25 @@ class BottomBarComponent extends Component {
             value={info.RAM.used}
             max={info.RAM.total}
             min={0}
-            icon={<DeveloperBoard className={classes.progressBarIcon} />}
+            Icon={DeveloperBoard}
           />
           <ProgressBar
             value={info.CPU.temperature.value}
             max={maxCPUTemp}
             min={minCPUTemp}
-            icon={<Whatshot className={classes.progressBarIcon} />}
+            Icon={Whatshot}
           />
           <ProgressBar
             value={info.CPU.load.value}
             max={100}
             min={0}
-            icon={<Memory className={classes.progressBarIcon} />}
+            Icon={Memory}
           />
           <ProgressBar
             value={info.MEM.db1Space.used}
             max={info.MEM.db1Space.total}
             min={0}
-            icon={<Storage className={classes.progressBarIcon} />}
+            Icon={Storage}
           />
         </Toolbar>
       </AppBar>

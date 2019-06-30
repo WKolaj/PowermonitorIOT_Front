@@ -8,6 +8,10 @@ const styles = theme => ({
     marginLeft: 10,
     marginRight: 20
   },
+  progressBarIcon: {
+    width: 16,
+    height: 16
+  },
   linearBackColorPrimary: {
     backgroundColor: theme.palette.grey[600]
   },
@@ -36,21 +40,25 @@ class ProgressBarComponent extends Component {
   }
 
   render() {
-    let { value, max, min, limit, classes, icon } = this.props;
+    let { value, max, min, limit, classes, Icon } = this.props;
     if (max === undefined || max === null) max = 100;
     if (min === undefined || min === null) min = 0;
     if (limit === undefined || limit === null) limit = 80;
 
     let percentageValue = (100 * (value - min)) / (max - min);
+    let isAlert = percentageValue >= limit;
 
     return (
       <React.Fragment>
-        {icon}
+        <Icon
+          className={classes.progressBarIcon}
+          color={isAlert ? "error" : "inherit"}
+        />
         <LinearProgress
           className={classes.linearProgress}
           variant="determinate"
           value={percentageValue}
-          classes={this.getLinearBarClasses(percentageValue >= limit, classes)}
+          classes={this.getLinearBarClasses(isAlert, classes)}
         />
       </React.Fragment>
     );

@@ -1,13 +1,26 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper, Button } from "@material-ui/core";
 import {
   fetchDevicesActionCreator,
-  refreshConnectionsActionCreator
+  fetchDeviceActionCreator,
+  refreshConnectionsActionCreator,
+  fetchVariableActionCreator,
+  fetchCalculationElementActionCreator,
+  fetchElementActionCreator
 } from "../../actions/dataActionCreator";
 import userService from "../../services/userService.js";
 import DevicesMenu from "./DevicesMenu";
+import Trend from "../TrendComponent/TrendComponent";
+import {
+  startRefreshingCurrentValuesActionCreator,
+  startRefreshingHistoryValuesActionCreator,
+  stopRefreshingCurrentValuesActionCreator,
+  stopRefreshingHistoryValuesActionCreator
+} from "../../actions/trendsActionCreator";
+import { showTrendDialogActionCreator } from "../../actions/trendDialogActionCreator";
+import { isEmpty } from "../../utilities/utilities";
 
 const styles = theme => ({
   root: { height: "100%" },
@@ -26,9 +39,9 @@ const styles = theme => ({
 
 class DevicesConfigComponent extends Component {
   refreshDevices = () => {
+    //this.props.fetchDevice("5d134065682f6f0e682d4015");
     let { fetchDevices, user, devices } = this.props;
-    if (!devices && userService.canVisualizeData(user)) {
-      fetchDevices();
+    if (isEmpty(devices) && userService.canVisualizeData(user)) {
     }
   };
 
@@ -47,6 +60,8 @@ class DevicesConfigComponent extends Component {
     if (this._timeHandler) clearInterval(this._timeHandler);
   };
 
+  handleStartSampling = () => {};
+
   render() {
     this.refreshDevices();
     let { classes, devices } = this.props;
@@ -58,6 +73,7 @@ class DevicesConfigComponent extends Component {
         direction="row"
         justify="center"
         alignItems="stretch"
+        wrap="nowrap"
       >
         <Grid item>
           <Paper className={classes.leftColumn}>
@@ -65,7 +81,54 @@ class DevicesConfigComponent extends Component {
           </Paper>
         </Grid>
         <Grid item xs>
-          <Paper className={classes.rightColumn}>asd</Paper>
+          <Paper className={classes.rightColumn}>
+            <Button
+              onClick={() => {
+                this.props.startRefreshingCurrentValues(
+                  this.props.trendObject.trendId
+                );
+              }}
+            >
+              Start
+            </Button>
+            <Button
+              onClick={() => {
+                this.props.stopRefreshingCurrentValues(
+                  this.props.trendObject.trendId
+                );
+              }}
+            >
+              Stop
+            </Button>
+            <Button
+              onClick={() => {
+                this.props.startRefreshingHistoryValues(
+                  this.props.trendObject.trendId
+                );
+              }}
+            >
+              Start
+            </Button>
+            <Button
+              onClick={() => {
+                this.props.stopRefreshingHistoryValues(
+                  this.props.trendObject.trendId
+                );
+              }}
+            >
+              Stop
+            </Button>
+            <Button
+              onClick={() => {
+                this.props.showTrendDialog(
+                  "5d134065682f6f0e682d4015",
+                  "5d134065682f6f0e682d3fe0"
+                );
+              }}
+            >
+              Show
+            </Button>
+          </Paper>
         </Grid>
       </Grid>
     );
@@ -75,7 +138,14 @@ class DevicesConfigComponent extends Component {
 const mapStateToProps = (state, props) => {
   return {
     devices: state.data.devices,
-    user: state.user.currentUser
+    user: state.user.currentUser,
+    trendObject:
+      state.trends[
+        Trend.generateTrendId(
+          "5d134065682f6f0e682d4015",
+          "5d134065682f6f0e682d3fe0"
+        )
+      ]
   };
 };
 
@@ -85,6 +155,15 @@ export default connect(
   mapStateToProps,
   {
     fetchDevices: fetchDevicesActionCreator,
-    refreshConnections: refreshConnectionsActionCreator
+    refreshConnections: refreshConnectionsActionCreator,
+    startRefreshingCurrentValues: startRefreshingCurrentValuesActionCreator,
+    startRefreshingHistoryValues: startRefreshingHistoryValuesActionCreator,
+    stopRefreshingCurrentValues: stopRefreshingCurrentValuesActionCreator,
+    stopRefreshingHistoryValues: stopRefreshingHistoryValuesActionCreator,
+    fetchDevice: fetchDeviceActionCreator,
+    fetchVariable: fetchVariableActionCreator,
+    fetchCalculationElement: fetchCalculationElementActionCreator,
+    fetchElement: fetchElementActionCreator,
+    showTrendDialog: showTrendDialogActionCreator
   }
 )(componentWithStyles);

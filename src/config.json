@@ -3,6 +3,9 @@
   "authRoute": "/api/auth",
   "devicesRoute": "/api/devices",
   "infoRoute": "/api/info",
+  "valuesRoute": "/api/values",
+  "variablesRoute": "/api/variables",
+  "calcElementsRoute": "/api/calcElements",
   "minCPUTemp": 50,
   "maxCPUTemp": 85
 }

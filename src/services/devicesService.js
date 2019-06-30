@@ -7,3 +7,8 @@ export async function getAllDevices() {
   let result = await http.get(devicesRoute);
   return result.data;
 }
+
+export async function getDevice(deviceId) {
+  let result = await http.get(`${devicesRoute}/${deviceId}`);
+  return result.data;
+}
