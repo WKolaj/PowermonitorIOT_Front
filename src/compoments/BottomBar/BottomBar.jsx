@@ -14,7 +14,8 @@ const styles = theme => ({
     top: "auto",
     bottom: 0,
     height: 35,
-    padding: 0
+    padding: 0,
+    position: "fixed"
   },
   toolBar: {
     minHeight: 0,

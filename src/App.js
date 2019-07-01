@@ -6,9 +6,12 @@ import store from "./store";
 import theme from "./theme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { BrowserRouter } from "react-router-dom";
-import { tickNumberToDate, dateToTickNumber } from "./utilities/utilities";
 
 class App extends Component {
+  componentDidMount() {
+    document.title = "PowermonitorIOT";
+  }
+
   render() {
     return (
       <Provider store={store}>

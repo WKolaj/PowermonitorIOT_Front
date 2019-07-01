@@ -80,12 +80,12 @@ class DevicesConfigComponent extends Component {
         wrap="nowrap"
       >
         <Grid item>
-          <Paper className={classes.leftColumn}>
+          <Paper className={classes.leftColumn} style={{ overflow: "auto" }}>
             <DevicesMenu />
           </Paper>
         </Grid>
         <Grid item xs>
-          <Paper className={classes.rightColumn}>
+          <Paper className={classes.rightColumn} style={{ overflow: "auto" }}>
             <Switch>
               <Route path="/devicesConfig/:deviceId" component={DeviceConfig} />
             </Switch>

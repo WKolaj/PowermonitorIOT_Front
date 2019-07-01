@@ -42,7 +42,8 @@ class TrendDialogComponent extends Component {
           direction="column"
           justify="flex-start"
           alignItems="stretch"
-          style={{ height: "100%" }}
+          style={{ height: "98%", width: "98%" }}
+          wrap="nowrap"
         >
           <Grid item>
             <Grid

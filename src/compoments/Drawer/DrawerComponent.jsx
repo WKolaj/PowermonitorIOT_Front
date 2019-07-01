@@ -116,7 +116,8 @@ class DrawerComponent extends Component {
 
 const mapStateToProps = (state, props) => {
   return {
-    shown: state.drawer.shown
+    shown: state.drawer.shown,
+    lang: state.userPreferences.lang
   };
 };
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { CircularProgress, Grid, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Chart } from "react-google-charts";
+import { Scatter } from "react-chartjs-2";
 import {
   createTrendActionCreator,
   updateTrendActionCreator,
@@ -48,6 +48,10 @@ const styles = theme => ({
     width: 200,
     height: 200,
     margin: theme.spacing(2)
+  },
+  trendDiv: {
+    width: "100%",
+    height: "100%"
   }
 });
 
@@ -128,42 +132,9 @@ class TrendComponent extends Component {
       return parseInt(a) - parseInt(b);
     });
 
-    return dataMsTimes.map(dataMsTime => [
-      msToDate(parseInt(dataMsTime)),
-      stateData[dataMsTime],
-      TrendComponent.formatTrendTooltip(dataMsTime, stateData[dataMsTime])
-    ]);
-  }
-
-  static generateOptionsForChartComponent(trendObject) {
-    let options = {
-      title: "",
-      hAxis: { title: "" },
-      vAxis: { title: "" },
-      legend: "none",
-      chartArea: { width: "90%", height: "90%" }
-    };
-
-    let { properties } = trendObject;
-
-    options.hAxis = {
-      ...options.hAxis,
-      format: "dd/MM/yyyy HH:mm:ss",
-      viewWindow: {
-        min: msToDate(properties.ranges.timeMin),
-        max: msToDate(properties.ranges.timeMax)
-      }
-    };
-
-    options.vAxis = {
-      ...options.vAxis,
-      viewWindow: {
-        min: properties.ranges.valueMin,
-        max: properties.ranges.valueMax
-      }
-    };
-
-    return options;
+    return dataMsTimes.map(dataMsTime => {
+      return { x: msToDate(parseInt(dataMsTime)), y: stateData[dataMsTime] };
+    });
   }
 
   static generateDataToSave(stateData, minTime, maxTime) {
@@ -185,6 +156,67 @@ class TrendComponent extends Component {
         value: stateData[dataMsTime]
       };
     });
+  }
+
+  static generateDataForTrend(trendObject) {
+    let stateData = trendObject.data.values;
+    return {
+      labels: ["Scatter"],
+      datasets: [
+        {
+          label: "My First dataset",
+
+          fill: true,
+          backgroundColor: "rgba(75,192,192,0.2)",
+          borderColor: "rgba(75,192,192,1)",
+          pointHitRadius: 20,
+          pointRadius: 0,
+          showLine: true,
+          steppedLine: true,
+          data: TrendComponent.convertStateDataToTrendData(stateData)
+        }
+      ]
+    };
+  }
+
+  static generateOptionsForTrend(trendObject) {
+    return {
+      maintainAspectRatio: false,
+      title: {
+        display: false
+      },
+      legend: {
+        display: false
+      },
+      animation: { duration: 0 },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              min: trendObject.properties.ranges.valueMin,
+              max: trendObject.properties.ranges.valueMax
+            }
+          }
+        ],
+        xAxes: [
+          {
+            type: "time",
+            time: {
+              displayFormats: {
+                second: "DD/MM/YYYY HH:mm:ss"
+              },
+              min: trendObject.properties.ranges.timeMin,
+              max: trendObject.properties.ranges.timeMax
+            },
+            ticks: {
+              autoSkip: true,
+              maxRotation: 0,
+              minRotation: 0
+            }
+          }
+        ]
+      }
+    };
   }
 
   renderBusyComponent = () => {
@@ -240,11 +272,8 @@ class TrendComponent extends Component {
 
     if (isEmpty(trendObject.data.values)) return this.renderBusyComponent();
 
-    let options = TrendComponent.generateOptionsForChartComponent(trendObject);
-
-    let trendValues = TrendComponent.convertStateDataToTrendData(
-      trendObject.data.values
-    );
+    let trendData = TrendComponent.generateDataForTrend(trendObject);
+    let trendOptions = TrendComponent.generateOptionsForTrend(trendObject);
 
     let csvData = TrendComponent.generateDataToSave(
       trendObject.data.values,
@@ -318,27 +347,8 @@ class TrendComponent extends Component {
                     justify="center"
                     alignItems="center"
                     className={classes.gridFullWidthAndHeight}
-                    wrap="nowrap"
                   >
-                    <Chart
-                      chartType="SteppedAreaChart"
-                      rows={trendValues}
-                      options={options}
-                      width="95%"
-                      height="95%"
-                      graphID="ScatterChart"
-                      columns={[
-                        {
-                          type: "date",
-                          label: ""
-                        },
-                        {
-                          type: "number",
-                          label: ""
-                        },
-                        { role: "tooltip", type: "string", p: { html: true } }
-                      ]}
-                    />
+                    <Scatter data={trendData} options={trendOptions} />
                   </Grid>
                 </Grid>
               </Grid>

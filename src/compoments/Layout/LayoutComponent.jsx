@@ -69,7 +69,6 @@ class LayoutComponent extends Component {
       <div className={classes.root}>
         <CssBaseline />
         <Toolbar />
-        <BottomBar />
         <Drawer />
         <TrendDialog />
         <UserDialog />
@@ -79,6 +78,7 @@ class LayoutComponent extends Component {
           <div className={classes.appBarSpacer} />
           <MainContainer />
         </main>
+        <BottomBar />
       </div>
     );
   }

@@ -136,62 +136,58 @@ export default function CustomPaginationActionsTable(props) {
   }
 
   return (
-    <Paper className={classes.root}>
-      <div className={classes.tableWrapper}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                {translate("ElementsConfigTableElementName")}
-              </TableCell>
-              <TableCell align="right">
-                {translate("ElementsConfigTableElementValue")}
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {elements
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(element => (
-                <TableRow key={element.id}>
-                  <TableCell component="th" scope="row">
-                    {element.name}
-                  </TableCell>
-                  <TableCell align="right">
-                    {renderValue(element)}
-                    <IconButton onClick={() => onTrendClicked(element.id)}>
-                      <BarChart />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 48 * emptyRows }}>
-                <TableCell colSpan={6} />
+    <div className={classes.tableWrapper}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>{translate("ElementsConfigTableElementName")}</TableCell>
+            <TableCell align="right">
+              {translate("ElementsConfigTableElementValue")}
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {elements
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map(element => (
+              <TableRow key={element.id}>
+                <TableCell component="th" scope="row">
+                  {element.name}
+                </TableCell>
+                <TableCell align="right">
+                  {renderValue(element)}
+                  <IconButton onClick={() => onTrendClicked(element.id)}>
+                    <BarChart />
+                  </IconButton>
+                </TableCell>
               </TableRow>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[6]}
-                colSpan={3}
-                count={elements.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { "aria-label": "Rows per page" },
-                  native: true
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
+            ))}
+
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 48 * emptyRows }}>
+              <TableCell colSpan={6} />
             </TableRow>
-          </TableFooter>
-        </Table>
-      </div>
-    </Paper>
+          )}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[6]}
+              colSpan={3}
+              count={elements.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: { "aria-label": "Rows per page" },
+                native: true
+              }}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </div>
   );
 }
